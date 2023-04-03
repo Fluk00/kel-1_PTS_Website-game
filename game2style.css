@@ -1,0 +1,110 @@
+canvas {
+    border:5px solid white;
+    background-color: transparent;
+}
+
+body #myCanvas {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+body {
+    background-image: url(flappy.jpg);
+    background-size: cover;
+}
+
+#myCanvas {
+    width: 50%;
+    margin: auto;
+}
+
+.logo img {
+    width: 15%;
+}
+
+.logo {
+    text-align: center;
+}
+
+#accelerate {
+    background-color: #757575;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 3px solid #cdcdcd;
+    margin-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif; 
+}
+
+.acc {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.use p {
+    font-size: 20px;
+    font-family: arial;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+    -webkit-text-stroke: 1px black; 
+}
+
+.use {
+    text-align: center;
+}
+
+.how p {
+    font-size: 20px;
+    font-family: arial;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+    -webkit-text-stroke: 1px black; 
+}
+
+.how {
+    text-align: center;
+    margin-top: 5px;
+}
+
+#restart {
+    background-color: #863903;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50px;
+    border: 3px solid #865b3d;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+#pause {
+    background-color: #863903;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50px;
+    border: 3px solid #865b3d;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+.tombol {
+    text-align: center;
+}

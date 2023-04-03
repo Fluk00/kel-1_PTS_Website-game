@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>umngotcha</title>
+    <link rel="stylesheet" href="middle_menu.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Righteous&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>   
+    <script src="middle_menu.js"></script>
+</head>
+<body id="tubuh">
+    <div id="canvas">
+        <div class="wrapper">
+            <div class="stats1">
+                <img src="makan.png" class="fork">
+                <div class="health-bar" data-total="1000" data-value="500">
+                    <div class="bar">
+                        <div class="hit"></div>
+                    </div>
+                </div>
+                <br />
+                <img src="bed2.png" class="bed">
+                <div class="health-bar2" data-total="1000" data-value="500">
+                    <div class="bar">
+                        <div class="hit"></div>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="stats2">
+                <img src="Obat.png" class="obat">
+
+                <div class="health-bar3" data-total="1000" data-value="500">
+                    <div class="bar">
+                        <div class="hit"></div>
+                    </div>
+                </div>
+                  
+                <br />
+    
+                <img src="joystick.png" class="joystick">
+                <div class="health-bar4" data-total="1000" data-value="500">
+                    <div class="bar">
+                        <div class="hit"></div>
+                    </div>
+                </div>
+                  
+                <br />
+            </div>
+        </div>
+            <br />
+            <div id="level">Level</div>    
+            <div id="clock">00:00</div>
+        <div>
+            <label id="pet-name"></label>
+        </div>
+
+        <div class="character">
+            <img id="avatar" class="d-block rounded mx-auto d-block">
+        </div>
+
+        <div id="mode" class="row mw-100">
+            <button onClick="changeImage()" class="damage-makan"  style="font-size: 1.2vw;">Makan</button>
+            <button onClick="changeImageTidur()" class="damage-tidur"  style="font-size: 1.2vw;">Tidur</button>
+        </div>
+
+        <div id="mode" class="row mw-100">
+            <button onClick="changeImageObat()" class="damage-obat" style="font-size: 1.2vw" >Obat</button>
+            <form id="main">
+              <button type="submit" class="damage-main" style="font-size: 1vw" >Game 1</button>
+            </form>
+            <form id="main2">
+                <button type="submit" class="damage-main2" style="font-size: 1vw">Game 2</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        const healthBar = document.querySelector('.health-bar');
+        let healthValue = healthBar.getAttribute('data-value');
+
+        if(localStorage.getItem("health-Value") !== null) {
+            healthValue = localStorage.getItem("health-Value");
+        } 
+
+        healthBar.setAttribute('data-value', healthValue);
+        localStorage.setItem("health-Value", healthValue);
+
+        const tidurBar = document.querySelector('.health-bar2');
+        let tidurValue = healthBar.getAttribute('data-value');
+
+        if(localStorage.getItem("tidur-Value") !== null) {
+            tidurValue = localStorage.getItem("tidur-Value");
+        } 
+
+        tidurBar.setAttribute('data-value', tidurValue);
+        localStorage.setItem("tidur-Value", tidurValue);
+
+        const obatBar = document.querySelector('.health-bar3');
+        let obatValue = obatBar.getAttribute('data-value');
+
+        if(localStorage.getItem("ngobat-Value") !== null) {
+            obatValue = localStorage.getItem("ngobat-Value");
+        } 
+
+        obatBar.setAttribute('data-value', obatValue);
+        localStorage.setItem("ngobat-Value", obatValue);
+
+        const mainBar = document.querySelector('.health-bar4');
+        let mainValue = mainBar.getAttribute('data-value');
+
+        if(localStorage.getItem("main1-Value") !== null) {
+            mainValue = localStorage.getItem("main1-Value");
+        } 
+
+        mainBar.setAttribute('data-value', mainValue);
+        localStorage.setItem("main1-Value", mainValue);
+        
+        var checkStatus_Eat = parseInt(localStorage.getItem("health-Value"));
+        var checkStatus_Sleep = parseInt(localStorage.getItem("tidur-Value"));
+        var checkStatus_Obat = parseInt(localStorage.getItem("ngobat-Value")); 
+        var checkStatus_Play = parseInt(localStorage.getItem("main1-Value"));
+
+        if(checkStatus_Eat < 0 && checkStatus_Sleep < 0 && checkStatus_Obat < 0) {
+            alert("Your avatar is dead");
+            window.location.href="negetshp.html";
+            localStorage.clear();
+        }
+
+        /* dapet pet name */
+        const petName = localStorage.getItem("pet-name");
+        const pet = document.getElementById("pet-name");
+        pet.textContent = petName;
+        /* dapet pet name */
+
+        /* dapet avatar source*/
+        const avatarImage = localStorage.getItem("avatarImage_s");
+        const avatarSource = document.getElementById("avatar");
+        avatarSource.setAttribute("src", avatarImage);
+        /* dapet avatar source */
+
+        /* pindah file */
+        const main = document.getElementById("main");
+        main.addEventListener("submit", function(x) {
+            x.preventDefault();
+            window.location.href = "pas_game.html";
+        })
+        /* pindah file */
+
+        /* pindah file 2 */
+        const main2 = document.getElementById("main2");
+        main2.addEventListener("submit", function(x) {
+            x.preventDefault();
+            window.location.href = "pas_game2.html";
+        })
+        /* pindah file */
+
+        var level = 1;
+        var levelNow = 1;
+        const levelDisplay = document.getElementById("level");
+
+        if(localStorage.getItem("Level-Key") === null) {
+            localStorage.setItem("Level-Key", level);
+            levelDisplay.innerHTML = "Level " + level;    
+        } else {
+            var levelKey = localStorage.getItem("Level-Key");
+            levelNow = parseInt(levelKey);
+            levelDisplay.innerHTML = "Level " + levelKey;        
+        }
+
+        function increaseLevel() {
+            levelNow = levelNow + 1;
+            levelDisplay.textContent = "Level " + levelNow;
+            localStorage.setItem("Level-Key", levelNow.toString());
+        }
+
+        setInterval(increaseLevel, 60000);
+
+        /* Waktu ato Clock */
+        var shown = new Date("2004-01-01T00:00:00");
+        var original = new Date("2004-01-01T00:00:00"); 
+        var factor = 60;
+
+        function getVirtual(time) { return new Date(shown.getTime() + (time.getTime() - original.getTime()) * factor); }
+        function pad2(num) { return (num < 10 ? "0" : "") + num; }
+        function format(time) { return pad2(time.getHours()) + ":" + pad2(time.getMinutes()); }
+
+        function startTime() {
+            var now = new Date();
+            var display = getVirtual(now);
+            var hours = display.getHours();           
+
+            var greetings = "";
+            if (hours >= 5 && hours < 10) { 
+                greetings = "Good Morning!";
+                document.body.style.backgroundImage = "url('morning.jpg')"; 
+            } else if (hours >= 10 && hours < 15) { 
+                greetings = "Good Afternoon!";
+                document.body.style.backgroundImage = "url('afternoon.jpg')";
+            } else if (hours >= 15 && hours < 21) { 
+                greetings = "Good Evening!";
+                document.body.style.backgroundImage = "url('evening.jpg')";
+            } else if (hours >= 21 && hours < 24) { 
+                greetings = "Good Night!";
+                document.body.style.backgroundImage = "url('night.jpg')";
+            }else if(hours >= 0 && hours < 5){
+                greetings = "Good Morning!";
+                document.body.style.backgroundImage = "url('dawn.jpg')";
+            } else { 
+                greetings = "Hello!"; 
+            }
+
+            var output = document.getElementById("clock");
+            output.innerText = greetings + " " + format(display);
+            setTimeout(startTime, 1000 / factor - (now.getMilliseconds() % (1000 / factor)));
+        }
+
+        startTime();
+        /* Waktu ato Clock */
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+</body>
+</html>

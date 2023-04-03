@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="ngestyle.css"/>
+    <title>Loading</title>
+</head>
+<body>
+    <div id="luding">
+        <div class="progress-Bar" style="--width: 0" data-label="Loading"></div>
+    </div>
+
+    <script type="text/javascript">
+        const progressBar = document.getElementsByClassName('progress-Bar')[0]
+        const max_width = 90 
+
+        setInterval(() => {
+            const computedStyle = getComputedStyle(progressBar)
+            const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
+            if (width < max_width) { 
+                progressBar.style.setProperty('--width', width + 0.1)
+            }
+        }, 5)
+
+        setInterval(transfer, 7000);
+
+        function transfer() {
+            window.location.href="menu_awal.html";
+        }
+    </script>
+</body>
+</html>

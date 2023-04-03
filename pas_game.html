@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GAME</title>
+    <link href="pas_game.css" rel="stylesheet"/>
+</head>
+<body>
+    <div id="cover">
+        <div class="logo">
+            <img src="logo.png" alt="header"/> 
+        </div>
+        <div>
+            <img id="avatarSrc" src="kucing 1.png" alt="avatar">
+            <img id="item" src="star.png" alt="star">
+            <div id="scores"></div>
+            <br>
+        </div>
+
+        <canvas id="myCanvas"></canvas>
+        
+        <br>
+
+        <div id="moving_button">
+            <button id="up" onmousedown="moveUpStart()" onmouseup="moveUpStop()">UP</button>
+            <button id="left" onmousedown="moveLeftStart()" onmouseup="moveLeftStop()">LEFT</button>
+            <button id="right" onmousedown="moveRightStart()" onmouseup="moveRightStop()">RIGHT</button>
+            <button id="down" onmousedown="moveDownStart()" onmouseup="moveDownStop()">DOWN</button>
+        </div>
+
+        <div>
+            <br>
+            <button id="restart" onclick="restartGame()">Play Again</button>
+            <button id="back" onclick="middlemenu()">Back to Home</button>
+        </div>
+
+        <br>
+        <br>
+
+    </div>
+    
+    <script type="text/javascript">
+        var avatar = new Image();
+        avatar.src = localStorage.getItem("avatarImage_s");
+
+        var star = new Image();
+        var starSrc = document.getElementById("item").getAttribute("src");
+        star.src = starSrc;
+
+        var myGamePiece;
+
+        var isMovingUp = false;
+        var isMovingDown = false;
+        var isMovingRight = false;
+        var isMovingLeft = false;      
+
+        var aspectRatio;
+        var canvasWidth = Math.min(1000, window.innerWidth - 50);
+        var canvasHeight = window.innerHeight;
+        
+        var score = 0;
+        var realScore = 0;
+        const scoreElement = document.getElementById("scores");
+        scoreElement.innerHTML = "Your Score : 0";
+
+        function startGame() {
+            myGamePiece = new component(avatar, 450, 400);
+            item = new Item(star);
+            myGameArea.start();
+        }
+
+        function restartGame() {
+            myGamePiece = new component(avatar, 450, 400);
+            item = new Item(star);
+            myGameArea.start();
+            score = 0;
+            scoreElement.innerHTML = "Your Score : 0";
+        }
+
+        var myGameArea = {
+            canvas : document.getElementById("myCanvas"),
+            start : function() {
+                this.canvas.width = canvasWidth;
+                this.canvas.height = canvasHeight;
+                this.context = this.canvas.getContext("2d");
+                this.interval = setInterval(updateGameArea, 10);
+                this.interval = setInterval(updateButton, 10);
+                this.frameNo = 0;
+
+                window.addEventListener("keydown", function (e) { 
+                    myGameArea.key = e.keyCode; 
+                    if (e.key === "ArrowUp") {
+                        isMovingUp = true;
+                    } else if (e.key === "ArrowLeft") {
+                        isMovingLeft = true;
+                    } else if (e.key === "ArrowRight") {
+                        isMovingRight = true;
+                    } else if (e.key === "ArrowDown") {
+                        isMovingDown = true;
+                    }
+                });
+
+                window.addEventListener("keyup", function (e) { 
+                    myGameArea.key = false; 
+                    if (e.key === "ArrowUp") {
+                        isMovingUp = false;
+                    } else if (e.key === "ArrowLeft") {
+                        isMovingLeft = false;
+                    } else if (e.key === "ArrowRight") {
+                        isMovingRight = false;
+                    } else if (e.key === "ArrowDown") {
+                        isMovingDown = false;
+                    }
+                });
+            },
+
+            clear : function() { this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); },
+            stop : function() { clearInterval(this.interval); }
+        }
+
+        function component(image, x, y) {
+            this.image = image;
+            this.width = 70;
+            this.height = 120;
+            this.x = x;
+            this.y = y;
+            this.speedX = 0;
+            this.speedY = 0;
+
+            this.update = function(){
+                ctx = myGameArea.context;
+                ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+            },
+
+            this.newPos = function() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+            }
+        }
+
+        function Item(star, isTouched) {
+            this.image = star;
+            this.width = 30;
+            this.height = 50;
+            this.isTouched = isTouched;
+            this.x = Math.floor(Math.random() * (canvasWidth - this.width));
+            this.y = Math.floor(Math.random() * (canvasHeight - this.height));
+        }
+
+        function updateItem() {
+            if (!item.isTouched) {
+                ctx = myGameArea.context;
+                ctx.drawImage(item.image, item.x, item.y, item.width, item.height);
+
+                if (
+                    myGamePiece.x < item.x + item.width &&
+                    myGamePiece.x + myGamePiece.width > item.x &&
+                    myGamePiece.y < item.y + item.height &&
+                    myGamePiece.y + myGamePiece.height > item.y
+                ) {
+                    item.isTouched = true;
+                    score++;
+                    realScore++;
+                    scoreElement.innerHTML = "Your Score : " + score;
+                }
+
+            } else {
+                item = new Item(star, false);
+            }
+        }
+
+        function moveUpStart() { isMovingUp = true; }
+        function moveUpStop() { 
+            isMovingUp = false; 
+            if (!isMovingDown && !isMovingLeft && !isMovingRight) {
+                myGamePiece.speedY = 0;
+            }
+        }
+
+        function moveRightStart() { isMovingRight = true; }
+        function moveRightStop() { 
+            isMovingRight = false; 
+            if (!isMovingDown && !isMovingLeft && !isMovingUp) {
+                myGamePiece.speedX = 0;
+            }
+        }
+
+        function moveLeftStart() { isMovingLeft = true; }
+        function moveLeftStop() { 
+            isMovingLeft = false; 
+            if (!isMovingDown && !isMovingUp && !isMovingRight) {
+                myGamePiece.speedX = 0;
+            }
+        }
+
+        function moveDownStart() { isMovingDown = true; }
+        function moveDownStop() { 
+            isMovingDown = false; 
+            if (!isMovingUp && !isMovingLeft && !isMovingRight) {
+                myGamePiece.speedY = 0;
+            }
+        }
+
+        function updateGameArea() {
+            myGameArea.clear();
+            myGamePiece.speedX = 0;
+            myGamePiece.speedY = 0;
+
+            switch (true) {
+                case myGameArea.key && myGameArea.key == 37:
+                    myGamePiece.speedX = -1;
+                    break;
+                case myGameArea.key && myGameArea.key == 39:
+                    myGamePiece.speedX = 1;
+                    break;
+                case myGameArea.key && myGameArea.key == 38:
+                    myGamePiece.speedY = -1;
+                    break;
+                case myGameArea.key && myGameArea.key == 40:
+                    myGamePiece.speedY = 1;
+                    break;
+                default:
+                    break;
+            }
+
+            myGamePiece.newPos();
+            
+            if (myGamePiece.x < 0 || myGamePiece.x + myGamePiece.width > myGameArea.canvas.width ||
+                myGamePiece.y < 0 || myGamePiece.y + myGamePiece.height > myGameArea.canvas.height) {
+                myGameArea.stop();
+                alert("Game Over!");
+                restartGame();
+            } else {
+                myGamePiece.update();
+                updateItem();
+                scoreElement.innerHTML = "Your Score : " + score;
+            }
+        }
+
+        function updateButton() {
+            myGameArea.clear();
+            myGamePiece.speedX = 0;
+            myGamePiece.speedY = 0;
+
+            switch (true) {
+                case isMovingUp:
+                    myGamePiece.speedY = -2;
+                    break;
+                case isMovingDown:
+                    myGamePiece.speedY = 2;
+                    break;
+                case isMovingLeft:
+                    myGamePiece.speedX = -2;
+                    break;
+                case isMovingRight:
+                    myGamePiece.speedX = 2;
+                    break;
+                default:
+                    break;
+            }
+
+            myGamePiece.newPos();
+            myGamePiece.update();
+            updateItem();
+        }
+
+        function middlemenu() {
+            window.location.href="middle_menu.html";
+            localStorage.setItem("value-score", realScore);
+        }
+
+        startGame();
+
+    </script>
+</body>
+</html>

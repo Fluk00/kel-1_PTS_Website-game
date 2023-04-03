@@ -1,0 +1,141 @@
+body {
+	background: url('bekgron.jpg');
+  background-size: cover;
+}
+
+.header img {
+    width: 20%;
+}
+
+.header {
+  text-align: center;
+  margin-top: 30px;
+}
+
+#labelPet {
+  font-weight: bold; 
+  font-family: helvetica; 
+  color: rgb(250, 185, 100);
+}
+
+#pet {
+  text-align: center;
+}
+
+#pet p {
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.play button {
+  text-align: center;
+  background-color: #587afe;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50px;
+  border: 2px solid #a2b4fe;
+  margin-bottom: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.char {
+  text-align: center;
+}
+
+input[type = text] {
+  background-color: bisque;
+  border: 2px solid burlywood;
+  border-radius: 5px;
+  padding: 30px 15px;
+  font-size: larger;
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  font-family: arial;
+}
+
+.carousel-wrapper {
+  height: 100px;
+  position: relative;
+  width: 320px;
+  display: block;
+  margin: 30px auto ;
+  text-align: center;
+}
+
+.carousel-item {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 25px 50px;
+  opacity: 0;
+  transition: all linear;
+}
+.arrow{
+  border: solid rgb(0, 110, 255);
+  border-width: 0 8.5px 8.5px 0;
+  display: inline-block;
+  padding: 12px;
+}
+.arrow-prev {
+  left: 30px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(135deg);
+}
+.arrow-next {
+  right: 30px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+[id^= "item"] {
+  display: none;
+}
+.item-1 {
+  z-index: 2;
+  opacity: 1;
+  background: url('kucing\ 1.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-left: 125px;
+  padding-right: 125px;
+}
+.item-2 {
+  background: url('anjing\ 1.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-left: 125px;
+  padding-right: 125px;
+}
+.item-3 {
+  background: url('ayam\ 1.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-left: 125px;
+  padding-right: 125px;
+}
+
+*:target ~ .item-1{
+  opacity: 0;
+}
+#item-1:target ~ .item-1 {
+  opacity: 1;
+
+}
+#item-2:target ~ .item-2, #item-3:target ~ .item-3 {
+  z-index: 3;
+  opacity: 1;
+}
